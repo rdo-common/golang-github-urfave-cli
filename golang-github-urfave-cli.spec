@@ -5,11 +5,11 @@
 %global with_check 1
 %global with_unit_test 1
 %else
-%global with_devel 0
+%global with_devel 1
 %global with_bundled 0
 %global with_debug 0
-%global with_check 0
-%global with_unit_test 0
+%global with_check 1
+%global with_unit_test 1
 %endif
 
 %if 0%{?with_debug}
@@ -31,7 +31,7 @@
 
 Name:           golang-%{provider}-%{project}-%{repo}
 Version:        1.17.0
-Release:        0.1.git%{shortcommit}%{?dist}
+Release:        0.2.git%{shortcommit}%{?dist}
 Summary:        A simple, fast, and fun package for building command line apps in Go
 # Detected licences
 # - MIT/X11 (BSD like) at 'LICENSE'
@@ -171,6 +171,9 @@ export GOPATH=%{buildroot}/%{gopath}:$(pwd)/Godeps/_workspace:%{gopath}
 %endif
 
 %changelog
+* Wed Jul 27 2016 jchaloup <jchaloup@redhat.com> - 1.17.0-0.2.git6011f16
+- enable devel and unit-test for epel7
+  related: #1354378 
 * Mon Jul 11 2016 jchaloup <jchaloup@redhat.com> - 0-0.1.git6011f16
 - First package for Fedora
   resolves: #1354378 
