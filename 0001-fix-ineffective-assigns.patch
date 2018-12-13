@@ -1,0 +1,30 @@
+From c3cc74dac756e33c2919ab998481809e8720e068 Mon Sep 17 00:00:00 2001
+From: Sebastian Sprenger <Sebastian.Sprenger@booxware.de>
+Date: Fri, 6 Oct 2017 07:28:43 +0200
+Subject: [PATCH 24/42] fix ineffective assigns
+
+---
+ app_test.go | 3 ---
+ 1 file changed, 3 deletions(-)
+
+diff --git a/app_test.go b/app_test.go
+index e14ddaf6..54e0951d 100644
+--- a/app_test.go
++++ b/app_test.go
+@@ -497,7 +497,6 @@ func TestApp_Float64Flag(t *testing.T) {
+ }
+ 
+ func TestApp_ParseSliceFlags(t *testing.T) {
+-	var parsedOption, firstArg string
+ 	var parsedIntSlice []int
+ 	var parsedStringSlice []string
+ 
+@@ -511,8 +510,6 @@ func TestApp_ParseSliceFlags(t *testing.T) {
+ 		Action: func(c *Context) error {
+ 			parsedIntSlice = c.IntSlice("p")
+ 			parsedStringSlice = c.StringSlice("ip")
+-			parsedOption = c.String("option")
+-			firstArg = c.Args().First()
+ 			return nil
+ 		},
+ 	}

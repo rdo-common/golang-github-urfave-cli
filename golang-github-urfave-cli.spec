@@ -36,18 +36,18 @@
 # https://github.com/urfave/cli
 %global provider_prefix %{provider}.%{provider_tld}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          61f519fe5e57c2518c03627b194899a105838eba
-%global shortcommit     %(c=%{commit}; echo ${c:0:7})
 
 Name:           golang-%{provider}-%{project}-%{repo}
-Version:        1.18.0
-Release:        0.1.git%{shortcommit}%{?dist}
+Version:        1.20.0
+Release:        1%{?dist}
 Summary:        A simple, fast, and fun package for building command line apps in Go
 # Detected licences
 # - MIT/X11 (BSD like) at 'LICENSE'
 License:        MIT
 URL:            https://%{provider_prefix}
-Source0:        https://%{provider_prefix}/archive/%{commit}/%{repo}-%{shortcommit}.tar.gz
+Source0:        https://%{provider_prefix}/archive/v%{version}.tar.gz#/%{repo}-%{version}.tar.gz
+
+Patch0:         0001-fix-ineffective-assigns.patch
 
 # e.g. el6 has ppc64 arch without gcc-go, so EA tag is required
 ExclusiveArch:  %{?go_arches:%{go_arches}}%{!?go_arches:%{ix86} x86_64 aarch64 %{arm}}
@@ -106,7 +106,9 @@ providing packages with %{import_path} prefix.
 %endif
 
 %prep
-%setup -q -n %{repo}-%{commit}
+%setup -q -n %{repo}-%{version}
+
+%patch0 -p1
 
 %build
 %install
@@ -182,6 +184,10 @@ export GOPATH=%{buildroot}/%{gopath}:$(pwd)/Godeps/_workspace:%{gopath}
 %endif
 
 %changelog
+* Thu Dec 13 2018 Alfredo Moralejo <amoralej@redhat.com> - 1.22.0-1
+- Update to 1.20.0
+- Add fix ineffective assigns to pass unit tests.
+
 * Wed Jan 18 2017 Jan Chaloupka <jchaloup@redhat.com> - 1.18.0-0.1.git61f519f
 - Bump to upstream 61f519fe5e57c2518c03627b194899a105838eba
   related: #1354378
