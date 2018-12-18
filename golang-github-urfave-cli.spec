@@ -29,6 +29,9 @@
 %global debug_package   %{nil}
 %endif
 
+# Set go_arches to rebuild in RDO all the three arches
+%global go_arches x86_64 aarch64 ppc64le
+
 %global provider        github
 %global provider_tld    com
 %global project         urfave
